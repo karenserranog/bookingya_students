@@ -81,5 +81,4 @@ public class GuestTest {
             guestService.getById(guest.getId());
         });
     }
-
     }
