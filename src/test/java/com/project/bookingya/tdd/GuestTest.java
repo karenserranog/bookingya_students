@@ -72,7 +72,7 @@ public class GuestTest {
     @Test
     @Order(5)
     void testDeleteGuest() throws Exception{
-        String identificacionBuscada = "3";
+        String identificacionBuscada = "1091677888";
         Guest guest = guestService.getByIdentification(identificacionBuscada);
         guestService.delete(guest.getId());
 

@@ -1,6 +1,7 @@
 package com.project.bookingya.tdd;
 
 import com.project.bookingya.dtos.ReservationDto;
+import com.project.bookingya.exceptions.EntityNotExistsException;
 import com.project.bookingya.models.Guest;
 import com.project.bookingya.models.Reservation;
 import com.project.bookingya.models.Room;
@@ -17,8 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -98,4 +98,16 @@ public class ReservationTest {
         assertEquals(updateDto.getCheckOut(), updated.getCheckOut());
         assertEquals(updateDto.getGuestsCount(), updated.getGuestsCount());
     }
+
+    @Test
+    @Order(4)
+    void testDeleteReservation() throws Exception {
+        reservationService.delete(savedReservationId);
+
+        // Intentamos buscarlo después de borrado
+        assertThrows(EntityNotExistsException.class, () -> {
+            reservationService.getById(savedReservationId);
+    });
+    }
 }
+
