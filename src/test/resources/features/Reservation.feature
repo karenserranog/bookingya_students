@@ -13,6 +13,6 @@ Feature: Reservation Management
       | code | name             | city      | max_guests | nightly_price | available |
       | 03   | Habitación Doble | Manizales | 5          | 200000.58     | true      |
     When I create a reservation with the following details:
-      | check_in   | check_out  | guest_id   | guests_count | notes     | room_id |
-      | 2026-05-04 | 2026-05-12 | 1007282714 | 5            | Hospedaje | 03      |
+      | check_in         | check_out        | identification | guests_count | notes     | code |
+      | 2026-05-04 15:00 | 2026-05-12 11:00 | 1007282714     | 5            | Hospedaje | 03   |
     Then the reservation should be created successfully

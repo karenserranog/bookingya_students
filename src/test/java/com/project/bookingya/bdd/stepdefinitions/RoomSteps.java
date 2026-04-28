@@ -37,6 +37,7 @@ public class RoomSteps {
     public void createRoom(io.cucumber.datatable.DataTable dataTable) {
         List<Map<String, String>> rows = dataTable.asMaps();
         Map<String, String> row = rows.get(0);
+
         RoomDto roomDto = new RoomDto();
         roomDto.setCode(row.get("code"));
         roomDto.setName(row.get("name"));
