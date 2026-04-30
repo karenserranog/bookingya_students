@@ -10,6 +10,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15 
+        env:
+          POSTGRES_DB: bookingya 
+          POSTGRES_USER: postgres    
+          POSTGRES_PASSWORD: creo06  
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
@@ -17,15 +32,20 @@ jobs:
       - name: Configurar JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21' 
+          java-version: '21'
           distribution: 'temurin'
           cache: maven
 
+    
       - name: Ejecutar pruebas y compilar
+        env:
+          DB_URL: jdbc:postgresql://127.0.0.1:5432/bookingya 
+          DB_USERNAME: postgres
+          DB_PASSWORD: creo06
         run: mvn -B clean verify
 
       - name: Subir Reporte Serenity
-        if: always() 
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: reporte-serenity-bookingya
